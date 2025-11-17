@@ -29,21 +29,20 @@ public class StatementPrinter {
 
         final NumberFormat frmt = NumberFormat.getCurrencyInstance(Locale.US);
 
-        for (Performance p : invoice.getPerformances()) {
-            final Play play = plays.get(p.getPlayID());
+        for (Performance performance : invoice.getPerformances()) {
 
-            int rslt = getThisAmount(p, play);
+            int rslt = getThisAmount(performance);
 
             // add volume credits
-            volumeCredits += Math.max(p.getAudience() - Constants.BASE_VOLUME_CREDIT_THRESHOLD, 0);
+            volumeCredits += Math.max(performance.getAudience() - Constants.BASE_VOLUME_CREDIT_THRESHOLD, 0);
             // add extra credit for every five comedy attendees
-            if ("comedy".equals(play.getType())) {
-                volumeCredits += p.getAudience() / Constants.COMEDY_EXTRA_VOLUME_FACTOR;
+            if ("comedy".equals(getPlay(performance).getType())) {
+                volumeCredits += performance.getAudience() / Constants.COMEDY_EXTRA_VOLUME_FACTOR;
             }
 
             // print line for this order
-            result.append(String.format("  %s: %s (%s seats)%n", play.getName(),
-                    frmt.format(rslt / Constants.PERCENT_FACTOR), p.getAudience()));
+            result.append(String.format("  %s: %s (%s seats)%n", getPlay(performance).getName(),
+                    frmt.format(rslt / Constants.PERCENT_FACTOR), performance.getAudience()));
             totalAmount += rslt;
         }
         result.append(String.format("Amount owed is %s%n", frmt.format(totalAmount / Constants.PERCENT_FACTOR)));
@@ -51,9 +50,13 @@ public class StatementPrinter {
         return result.toString();
     }
 
-    private static int getThisAmount(Performance performance, Play play) {
+    private Play getPlay(Performance performance) {
+        return plays.get(performance.getPlayID());
+    }
+
+    private int getThisAmount(Performance performance) {
         int thisAmount = 0;
-        switch (play.getType()) {
+        switch (getPlay(performance).getType()) {
             case "tragedy":
                 thisAmount = Constants.TRAGEDY_BASE_AMOUNT;
                 if (performance.getAudience() > Constants.TRAGEDY_AUDIENCE_THRESHOLD) {
@@ -71,8 +74,12 @@ public class StatementPrinter {
                 thisAmount += Constants.COMEDY_AMOUNT_PER_AUDIENCE * performance.getAudience();
                 break;
             default:
-                throw new RuntimeException(String.format("unknown type: %s", play.getType()));
+                throw new RuntimeException(String.format("unknown type: %s", getPlay(performance).getType()));
         }
         return thisAmount;
+    }
+
+    private static String getType(Play play) {
+        return play.getType();
     }
 }
