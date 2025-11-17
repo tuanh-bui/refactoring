@@ -31,7 +31,7 @@ public class StatementPrinter {
 
         for (Performance performance : invoice.getPerformances()) {
 
-            int rslt = getThisAmount(performance);
+            final int rslt = getAmount(performance);
 
             // add volume credits
             volumeCredits += Math.max(performance.getAudience() - Constants.BASE_VOLUME_CREDIT_THRESHOLD, 0);
@@ -54,7 +54,7 @@ public class StatementPrinter {
         return plays.get(performance.getPlayID());
     }
 
-    private int getThisAmount(Performance performance) {
+    private int getAmount(Performance performance) {
         int thisAmount = 0;
         switch (getPlay(performance).getType()) {
             case "tragedy":
