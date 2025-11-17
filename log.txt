@@ -1,4 +1,6 @@
-ff5004e (HEAD -> main, origin/main, origin/HEAD) adding shortcut keys for Inline Variable (Re: Piazza question)
+d15e899 (HEAD -> main, origin/main, origin/HEAD) Task 1.2 done
+7ddf01a Finish Task 1.1
+ff5004e adding shortcut keys for Inline Variable (Re: Piazza question)
 b545fe2 clarifying extracted method names in README.md
 a0124c9 fixing starter file
 c8d9d38 adding starter files
