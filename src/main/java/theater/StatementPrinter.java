@@ -32,8 +32,7 @@ public class StatementPrinter {
         for (Performance p : invoice.getPerformances()) {
             final Play play = plays.get(p.getPlayID());
 
-            int thisAmount = 0;
-            thisAmount = getThisAmount(p, play);
+            int rslt = getThisAmount(p, play);
 
             // add volume credits
             volumeCredits += Math.max(p.getAudience() - Constants.BASE_VOLUME_CREDIT_THRESHOLD, 0);
@@ -44,8 +43,8 @@ public class StatementPrinter {
 
             // print line for this order
             result.append(String.format("  %s: %s (%s seats)%n", play.getName(),
-                    frmt.format(thisAmount / Constants.PERCENT_FACTOR), p.getAudience()));
-            totalAmount += thisAmount;
+                    frmt.format(rslt / Constants.PERCENT_FACTOR), p.getAudience()));
+            totalAmount += rslt;
         }
         result.append(String.format("Amount owed is %s%n", frmt.format(totalAmount / Constants.PERCENT_FACTOR)));
         result.append(String.format("You earned %s credits%n", volumeCredits));
@@ -53,7 +52,7 @@ public class StatementPrinter {
     }
 
     private static int getThisAmount(Performance p, Play play) {
-        int thisAmount;
+        int thisAmount = 0;
         switch (play.getType()) {
             case "tragedy":
                 thisAmount = Constants.TRAGEDY_BASE_AMOUNT;
