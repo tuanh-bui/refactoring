@@ -1,7 +1,13 @@
-d15e899 (HEAD -> main, origin/main, origin/HEAD) Task 1.2 done
+cfcc3ae (HEAD -> main, origin/main, origin/HEAD) Task 2.5
+e95da37 Task 2.4
+0f02653 Task 2.4
+7d4f19e Task 2.3
+c8213fd Task 2.2
+8a3f11f Task 2.1
+67e15a1 Task 1.2
+d15e899 Task 1.2 done
 7ddf01a Finish Task 1.1
 ff5004e adding shortcut keys for Inline Variable (Re: Piazza question)
 b545fe2 clarifying extracted method names in README.md
 a0124c9 fixing starter file
 c8d9d38 adding starter files
-cbe4517 first commit
